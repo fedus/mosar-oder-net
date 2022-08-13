@@ -1,5 +1,7 @@
 <script lang="ts">
-    import Mosavatar from "./mosavatar.svelte";
+    import Mosavatar from "$lib/components/mosavatar.svelte";
+    import { screenSize } from "$lib/stores/screen-size";
+
     import mosavatarOne from "$lib/assets/mosavatars/m1.png";
     import mosavatarTwo from "$lib/assets/mosavatars/m2.png";
     import aperol from "$lib/assets/mosavatars/aperol.png";
@@ -7,18 +9,30 @@
 
 <div class="skew-container">
     <div class="skew top">
-        <div class="unskew-rotate-top">
-            <Mosavatar mainSrc="{mosavatarTwo}" />
-        </div>
+        {#if $screenSize.index >= 3}
+            <div class="unskew-rotate-top">
+                <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
+            </div>
+        {/if}
         <div class="top-text">MOSAR</div>
     </div>
     <div class="skew bottom">
-        <div class="unskew-rotate-bottom">
-            <Mosavatar mainSrc={mosavatarOne} />
-        </div>
+        {#if $screenSize.index >= 3}
+            <div class="unskew-rotate-bottom">
+                <Mosavatar mainSrc={mosavatarOne} />
+            </div>
+        {/if}
         <div class="bottom-text">ODER NET?</div>
     </div>
 </div>
+{#if $screenSize.index < 3}
+<div class="abs bottom">
+    <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
+</div>
+<div class="abs top">
+    <Mosavatar mainSrc={mosavatarOne} />
+</div>
+{/if}
 
 <style lang="scss">
     .skew-container {
@@ -44,10 +58,10 @@
                 justify-content: center;
                 padding: 20px;
                 overflow: hidden;
-                
+
                 font-size: 8vh;
                 font-weight: 900;
-                
+
                 transition: transform 1s;
             }
 
@@ -70,11 +84,11 @@
             }
 
             .top-text {
-                transform: translateY(200px);
+                //transform: translateY(200px);
             }
 
             .bottom-text {
-                transform: translateY(-200px);
+                //transform: translateY(-200px);
             }
 
             .unskew-rotate-top {
@@ -88,6 +102,22 @@
                 top: 0;
                 transform: skewY(11deg) rotate(-191deg) translateX(-120%);
             }
+        }
+    }
+
+    .abs {
+        position: fixed;
+        width: 100vw;
+
+        &.top {
+            top: 0;
+            transform: rotate(180deg);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &.bottom {
+            bottom: 0;
         }
     }
 </style>

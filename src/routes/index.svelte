@@ -7,10 +7,14 @@
 </div>
 
 <style lang="scss">
+    :global(html) {
+      font-family: 'Raleway', sans-serif;
+    }
+
     :global(body) {
         height: 100vh;
     }
-    
+
     .main {
         position: relative;
         height: 100%;

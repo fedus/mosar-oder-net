@@ -3,7 +3,7 @@
     export let secondarySrc: string = "";
 </script>
 
-<div class="mosar-pic">
+<div class="mosar-pic center">
     <img class="main-pic" src={mainSrc} alt="Stylised Mosar">
     {#if secondarySrc}
         <img class="secondary-pic" src={secondarySrc} alt="Drink accessory for Mosar">
@@ -12,20 +12,24 @@
 
 <style lang="scss">
     .mosar-pic {
-        //position: absolute;
-
         display: flex;
-        //width: 10%;
-        
+        width: min-content;
+        height: min-content;
+
         .main-pic {
-            //width: 100%;
+            width: 300px;
         }
-        
+
         .secondary-pic {
             position: fixed;
             bottom: 0;
             margin-bottom: -10px;
-            width: 50%;
+            width: 175px;
         }
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
