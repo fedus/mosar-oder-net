@@ -10,7 +10,7 @@
 <div class="skew-container">
     <div class="skew top">
         {#if $screenSize.index >= 3}
-            <div class="unskew-rotate-top">
+            <div class="unskew-rotate-top mosavatar-desktop">
                 <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
             </div>
         {/if}
@@ -18,7 +18,7 @@
     </div>
     <div class="skew bottom">
         {#if $screenSize.index >= 3}
-            <div class="unskew-rotate-bottom">
+            <div class="unskew-rotate-bottom mosavatar-desktop">
                 <Mosavatar mainSrc={mosavatarOne} />
             </div>
         {/if}
@@ -26,10 +26,10 @@
     </div>
 </div>
 {#if $screenSize.index < 3}
-<div class="abs bottom">
+<div class="abs bottom mosavatar-mobile">
     <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
 </div>
-<div class="abs top">
+<div class="abs top mosavatar-mobile">
     <Mosavatar mainSrc={mosavatarOne} />
 </div>
 {/if}
@@ -106,18 +106,25 @@
     }
 
     .abs {
-        position: fixed;
-        width: 100vw;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
 
         &.top {
             top: 0;
-            transform: rotate(180deg);
-            margin-left: auto;
-            margin-right: auto;
+            transform: translateX(-50%) rotate(180deg);
         }
 
         &.bottom {
             bottom: 0;
         }
+    }
+
+    .mosavatar-desktop {
+        width: 275px;
+    }
+
+    .mosavatar-mobile {
+        width: 225px;
     }
 </style>

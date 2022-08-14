@@ -13,18 +13,18 @@
 <style lang="scss">
     .mosar-pic {
         display: flex;
-        width: min-content;
-        height: min-content;
+        //width: min-content;
+        //height: min-content;
 
         .main-pic {
-            width: 300px;
+            width: 100%;
         }
 
         .secondary-pic {
             position: fixed;
             bottom: 0;
             margin-bottom: -10px;
-            width: 175px;
+            width: 50%;
         }
     }
 
