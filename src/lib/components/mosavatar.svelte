@@ -13,8 +13,6 @@
 <style lang="scss">
     .mosar-pic {
         display: flex;
-        //width: min-content;
-        //height: min-content;
 
         .main-pic {
             width: 100%;

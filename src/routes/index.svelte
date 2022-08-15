@@ -4,6 +4,9 @@
 
 <div class="main">
     <Skewer/>
+    <div class="button-container main-buttons bottom">
+        <button class="button button-play">Spillen</button>
+    </div>
 </div>
 
 <style lang="scss">
@@ -21,5 +24,26 @@
         width: 100%;
         background-color: white;
         overflow: hidden;
+
+        .button-container.main-buttons {
+            position: absolute;
+
+            &.bottom {
+                bottom: 30%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .button {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 10px 20px;
+
+            border: 2px solid;
+
+            &.button-play {
+
+            }
+        }
     }
 </style>

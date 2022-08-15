@@ -1,6 +1,5 @@
 <script lang="ts">
     import Mosavatar from "$lib/components/mosavatar.svelte";
-    import { screenSize } from "$lib/stores/screen-size";
 
     import mosavatarOne from "$lib/assets/mosavatars/m1.png";
     import mosavatarTwo from "$lib/assets/mosavatars/m2.png";
@@ -9,30 +8,26 @@
 
 <div class="skew-container">
     <div class="skew top">
-        {#if $screenSize.index >= 3}
-            <div class="unskew-rotate-top mosavatar-desktop">
-                <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
-            </div>
-        {/if}
+        <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
+            <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
+        </div>
         <div class="top-text">MOSAR</div>
     </div>
     <div class="skew bottom">
-        {#if $screenSize.index >= 3}
-            <div class="unskew-rotate-bottom mosavatar-desktop">
-                <Mosavatar mainSrc={mosavatarOne} />
-            </div>
-        {/if}
+        <div class="unskew-rotate-bottom mosavatar-desktop mosavatar-bottom">
+            <Mosavatar mainSrc={mosavatarOne} />
+        </div>
         <div class="bottom-text">ODER NET?</div>
     </div>
 </div>
-{#if $screenSize.index < 3}
-<div class="abs bottom mosavatar-mobile">
+
+<div class="abs bottom mosavatar-mobile mosavatar-top">
     <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
 </div>
-<div class="abs top mosavatar-mobile">
+<div class="abs top mosavatar-mobile mosavatar-bottom">
     <Mosavatar mainSrc={mosavatarOne} />
 </div>
-{/if}
+
 
 <style lang="scss">
     .skew-container {
@@ -83,48 +78,136 @@
                 transition: transform 1s
             }
 
+            @keyframes top-text-anim {
+                from {
+                    transform: translateY(200px);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes bottom-text-anim {
+                from {
+                    transform: translateY(-200px);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+
             .top-text {
-                //transform: translateY(200px);
+                animation: top-text-anim 2s;
             }
 
             .bottom-text {
-                //transform: translateY(-200px);
+                animation: bottom-text-anim 2s;
             }
 
             .unskew-rotate-top {
                 position: absolute;
                 bottom: 0;
-                transform: skewY(11deg) rotate(-11deg) translateX(-120%);
+                transform: skewY(11deg) rotate(-11deg);
+                left: 35%;
             }
 
             .unskew-rotate-bottom {
                 position: absolute;
                 top: 0;
-                transform: skewY(11deg) rotate(-191deg) translateX(-120%);
+                transform: skewY(11deg) rotate(-191deg);
+                right: 35%;
             }
         }
     }
 
     .abs {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
 
         &.top {
+            right: 50%;
+            transform: translateX(50%) rotate(180deg);
             top: 0;
-            transform: translateX(-50%) rotate(180deg);
         }
 
         &.bottom {
+            left: 50%;
+            transform: translateX(-50%);
             bottom: 0;
+        }
+    }
+
+    @keyframes mosavatar-desktop-top {
+        from {
+            left: 0;
+        }
+
+        to {
+            left: 35%;
+        }
+    }
+
+    @keyframes mosavatar-desktop-bottom {
+        from {
+            right: 0;
+        }
+
+        to {
+            right: 35%;
+        }
+    }
+
+    @keyframes mosavatar-mobile-top {
+        from {
+            left: -50%;
+        }
+
+        to {
+            left: 50%;
+        }
+    }
+
+    @keyframes mosavatar-mobile-bottom {
+        from {
+            right: -50%;
+        }
+
+        to {
+            right: 50%;
         }
     }
 
     .mosavatar-desktop {
         width: 275px;
+        display: none;
+
+        &.mosavatar-top {
+            animation: mosavatar-desktop-top 2s;
+        }
+
+        &.mosavatar-bottom {
+            animation: mosavatar-desktop-bottom 2s;
+        }
+
+        @media (min-width: 1200px) {
+            display: block;
+        }
     }
 
     .mosavatar-mobile {
         width: 225px;
+
+        &.mosavatar-top {
+            animation: mosavatar-mobile-top 2s;
+        }
+
+        &.mosavatar-bottom {
+            animation: mosavatar-mobile-bottom 2s;
+        }
+
+        @media (min-width: 1200px) {
+            display: none;
+        }
     }
 </style>
