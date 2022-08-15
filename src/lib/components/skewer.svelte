@@ -4,16 +4,18 @@
     import mosavatarOne from "$lib/assets/mosavatars/m1.png";
     import mosavatarTwo from "$lib/assets/mosavatars/m2.png";
     import aperol from "$lib/assets/mosavatars/aperol.png";
+
+    export let open = false;
 </script>
 
 <div class="skew-container">
-    <div class="skew top">
+    <div class="skew top" class:open>
         <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
             <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
         </div>
         <div class="top-text">MOSAR</div>
     </div>
-    <div class="skew bottom">
+    <div class="skew bottom" class:open>
         <div class="unskew-rotate-bottom mosavatar-desktop mosavatar-bottom">
             <Mosavatar mainSrc={mosavatarOne} />
         </div>
@@ -65,6 +67,10 @@
                 color: rgb(255,195,0);
                 background: rgb(30,200,220);
                 background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 50%);
+
+                &.open {
+                    transform: skewY(11deg) translateY(-75vh);
+                }
             }
 
             &.bottom {
@@ -72,6 +78,10 @@
                 color: rgb(30,200,220);
                 background: rgb(255,195,0);
                 background: radial-gradient(ellipse at center top, rgba(255,195,0,1) 5%, rgba(176,135,0,1) 50%);
+
+                &.open {
+                    transform: skewY(11deg) translateY(75vh);
+                }
             }
 
             .top-text, .bottom-text {
