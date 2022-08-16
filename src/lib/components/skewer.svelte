@@ -9,13 +9,13 @@
 </script>
 
 <div class="skew-container">
-    <div class="skew top" class:open>
+    <div class="skew top animate" class:open>
         <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
             <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
         </div>
         <div class="top-text">MOSAR</div>
     </div>
-    <div class="skew bottom" class:open>
+    <div class="skew bottom animate" class:open>
         <div class="unskew-rotate-bottom mosavatar-desktop mosavatar-bottom">
             <Mosavatar mainSrc={mosavatarOne} />
         </div>
@@ -59,7 +59,9 @@
                 font-size: 8vh;
                 font-weight: 900;
 
-                transition: transform 1s;
+                &.animate {
+                    transition: transform 1s;
+                }
             }
 
             &.top {

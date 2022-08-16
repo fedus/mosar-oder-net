@@ -1,15 +1,18 @@
 <script lang="ts">
+    import { page } from '$app/stores';
     import Skewer from "$lib/components/skewer.svelte";
 
     let skewerOpen = false;
+
+    $: skewerOpen = !!$page.routeId;
 </script>
 
 <div class="main">
+    <slot></slot>
     <Skewer bind:open={skewerOpen}/>
     <div class="button-container main-buttons bottom">
-        <button class="button button-play" on:click={() => {
-            skewerOpen = true;
-            console.log("open")}}>Spillen</button>
+        <button class="button button-play" on:click={() => skewerOpen = true}>Spillen</button>
+        <a href="test">Test</a>
     </div>
 </div>
 
