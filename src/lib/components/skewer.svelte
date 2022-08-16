@@ -8,7 +8,7 @@
     export let open = false;
 </script>
 
-<div class="skew-container">
+<div class="skew-container" class:disablePointerEvents={open}>
     <div class="skew top animate" class:open>
         <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
             <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
@@ -220,5 +220,9 @@
         @media (min-width: 1200px) {
             display: none;
         }
+    }
+
+    .disablePointerEvents {
+        pointer-events: none;
     }
 </style>

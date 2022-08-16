@@ -78,6 +78,8 @@
             font-weight: 900;
             box-shadow: 1px 1px 21px 8px rgba(255, 255, 255,0.5);
 
+            font-size: 1.5rem;
+
             &.button-play {
                 background-color: #1ec1d5;
             }
