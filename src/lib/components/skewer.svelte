@@ -38,7 +38,6 @@
         left: 50%;
         height: 3000px;
         width: 3000px;
-        border: 3px solid red;
         display: flex;
         flex-direction: column;
         align-items: center;
