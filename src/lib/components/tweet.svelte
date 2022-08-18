@@ -68,7 +68,7 @@
 		background-color: #ffffff;
 		position: relative;
 		/**/
-		width: 550px;
+		max-width: 550px;
 		/**/
 
 		padding: 10px 15px;

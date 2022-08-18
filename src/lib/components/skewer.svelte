@@ -23,11 +23,11 @@
     </div>
 </div>
 
-<div class="abs bottom mosavatar-mobile mosavatar-top">
-    <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
-</div>
-<div class="abs top mosavatar-mobile mosavatar-bottom">
+<div class="mosavatar-mobile mosavatar-top" class:in={!open} class:out={open}>
     <Mosavatar mainSrc={mosavatarOne} />
+</div>
+<div class="mosavatar-mobile mosavatar-bottom" class:in={!open} class:out={open}>
+    <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
 </div>
 
 
@@ -133,22 +133,6 @@
         }
     }
 
-    .abs {
-        position: absolute;
-
-        &.top {
-            right: 50%;
-            transform: translateX(50%) rotate(180deg);
-            top: 0;
-        }
-
-        &.bottom {
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 0;
-        }
-    }
-
     @keyframes mosavatar-desktop-top {
         from {
             left: 0;
@@ -169,7 +153,17 @@
         }
     }
 
-    @keyframes mosavatar-mobile-top {
+    @keyframes mosavatar-mobile-top-in {
+        from {
+            right: -50%;
+        }
+
+        to {
+            right: 50%;
+        }
+    }
+
+    @keyframes mosavatar-mobile-bottom-in {
         from {
             left: -50%;
         }
@@ -179,13 +173,23 @@
         }
     }
 
-    @keyframes mosavatar-mobile-bottom {
+    @keyframes mosavatar-mobile-top-out {
         from {
-            right: -50%;
+            right: 50%;
         }
 
         to {
-            right: 50%;
+            right: 150%;
+        }
+    }
+
+    @keyframes mosavatar-mobile-bottom-out {
+        from {
+            left: 50%;
+        }
+
+        to {
+            left: 150%;
         }
     }
 
@@ -208,13 +212,39 @@
 
     .mosavatar-mobile {
         width: 225px;
+        position: absolute;
+        transition: left 2s, right 2s;
 
         &.mosavatar-top {
-            animation: mosavatar-mobile-top 2s;
+
+            top: 0;
+            transform: translateX(50%) rotate(180deg);
+
+            &.in {
+                animation: mosavatar-mobile-top-in 2s;
+                right: 50%;
+            }
+
+            &.out {
+                //animation: mosavatar-mobile-top-out 2s;
+                right: 150%;
+            }
         }
 
         &.mosavatar-bottom {
-            animation: mosavatar-mobile-bottom 2s;
+
+            bottom: 0;
+            transform: translateX(-50%);
+
+            &.in {
+                animation: mosavatar-mobile-bottom-in 2s;
+                left: 50%;
+            }
+
+            &.out {
+                //animation: mosavatar-mobile-bottom-out 2s;
+                left: 150%;
+            }
         }
 
         @media (min-width: 1200px) {
