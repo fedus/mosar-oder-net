@@ -1,14 +1,15 @@
 <script lang="ts">
 	// Courtesy of https://codepen.io/JackRogers0/pen/QWKMJaP
+    import defaultTwitterProfilePic from '$lib/assets/twtr_default_profile.png';
 </script>
 
 <div class="tweet">
 	<section class="row">
-		<a href="//StickerTweet.com" class="profile">
-			<img src="https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_normal.jpg" />
-			<span class="name"> Donald J. Trump </span>
-			<span class="tag">@realDonaldTrump</span>
-		</a>
+        <div class="profile">
+            <img src={defaultTwitterProfilePic} alt="Stylised anonymous human head shape" />
+            <span class="name">Donald J. Trump</span>
+            <span class="tag">@realDonaldTrump</span>
+        </div>
 		<svg viewBox="0 0 24 24" class="twitter-logo">
 			<g>
 				<path
