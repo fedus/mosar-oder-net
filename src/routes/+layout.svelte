@@ -66,10 +66,12 @@
             }
         }
 
-        .button {
+        :global(.button), :global(button) {
+            display: inline-block;
             font-family: Arial, Helvetica, sans-serif;
             text-decoration: none;
             padding: 10px 20px;
+            cursor: pointer;
 
             border-radius: 30px;
             text-transform: uppercase;
@@ -80,13 +82,31 @@
 
             font-size: 1.5rem;
 
-            &.button-play {
-                background-color: #1ec1d5;
+            transform: scale(1);
+
+            transition: transform 0.5s;
+
+            @keyframes button-pulse {
+                from {
+                    transform: scale(1);
+                }
+
+                to {
+                    transform: scale(1.5);
+                }
             }
 
-            &.button-help {
-                background-color: rgb(255,195,0);;
+            &:hover {
+                animation: button-pulse 0.5s infinite alternate;
             }
+        }
+
+        .button-play {
+            background-color: #1ec1d5;
+        }
+
+        .button-help {
+            background-color: rgb(255,195,0);;
         }
     }
 </style>

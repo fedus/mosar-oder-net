@@ -1,9 +1,13 @@
 <script lang="ts">
-    import Tweet from '$lib/components/tweet.svelte';
+    /** @type {import('./$types').PageData} */  
+    import Game from '$lib/components/game.svelte';
+    import type GameData from '$lib/types/game-data';
+
+    export let data: GameData;
 </script>
 
 <div class="play-container">
-    <Tweet />
+    <Game gameData={data} />
 </div>
 
 <style lang="scss">
