@@ -1,9 +1,11 @@
 <script lang="ts">
-    
+    import { gameStateStore } from '$lib/stores/game-state';
+
+    const { score, rounds } = gameStateStore;
 </script>
 
 <div class="score-container">
-    Your score is ...
+    Your score is {$score} out of {$rounds}!
 </div>
 
 <style lang="scss">

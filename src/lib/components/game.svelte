@@ -1,58 +1,48 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { blur } from 'svelte/transition';
+    import { createEventDispatcher } from 'svelte';
+    import { gameStateStore } from '$lib/stores/game-state';
     import Tweet from '$lib/components/tweet.svelte';
-    import type GameData from '$lib/types/game-data';
     import AnswerOption from '$lib/types/answer-option';
+    import type GameData from '$lib/types/game-data';
 
-    export let gameData: GameData = { tweets: [], answers: [] };
-    const rounds = gameData.tweets.length;
+    const dispatch = createEventDispatcher();
+
+    export let gameData: GameData;
+
+    gameStateStore.setGameData(gameData);
+
+    const { round, currentTweet, gameRunning } = gameStateStore;
 
     let displayTweet = true;
 
-    let score = 0;
-    let round = 1;
-
-    $: gameRunning = round <= rounds;
-
-    function getCurrentTweet() {
-        return gameData.tweets[round - 1];
-    }
-
-    function getCurrentAnswer() {
-        return gameData.answers.find(answer => answer.id === getCurrentTweet().id);
-    }
-
-    function answerIsCorrect(chosenAnswer: AnswerOption) {
-        return getCurrentAnswer()?.answerOption === chosenAnswer;
-    }
-
-    function choose(answer: AnswerOption) {
-        if(answerIsCorrect(answer)) {
-            score = score + 1;
+    $: {
+        if(!$gameRunning) {
+            setTimeout(() => goto(`/play/finish`, { replaceState: false }), 500);
         }
-
-        proceedGame();
     }
 
-    function proceedGame() {
-        round++;
-    }
+    $: $round && dispatch('transition');
 </script>
 
-{#key round}
-    {#if gameRunning}
+{#key $round}
+    {#if $gameRunning}
         <div class="game-container" in:blur={{ delay: 500, amount: 500 }} out:blur={{ duration: 500, amount: 500 }}>
             <div class="tweet-container">
-                {#if displayTweet}
+                {#if displayTweet && $currentTweet}
                     <div class="tweet-animation-wrapper">
-                        <Tweet tweet={getCurrentTweet()} />
+                        <Tweet tweet={$currentTweet} />
                     </div>
                 {/if}
             </div>
             <div class="button-container">
-                <button class="mosar-button" on:click={() => choose(AnswerOption.MOSAR)}>MOSAR!</button>
-                <button class="not-mosar-button" on:click={() => choose(AnswerOption.NOT_MOSAR)}>NOT MOSAR!</button>
-                <div>Score: {score}</div>
+                <button class="mosar-button" on:click={() => gameStateStore.choose(AnswerOption.MOSAR)}>
+                    MOSAR!
+                </button>
+                <button class="not-mosar-button" on:click={() => gameStateStore.choose(AnswerOption.NOT_MOSAR)}>
+                    NOT MOSAR!
+                </button>
             </div>
         </div>
     {/if}
