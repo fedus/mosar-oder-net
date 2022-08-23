@@ -31,7 +31,7 @@
         <div class="game-container" in:blur={{ delay: 500, amount: 500 }} out:blur={{ duration: 500, amount: 500 }}>
             <div class="tweet-container">
                 {#if displayTweet && $currentTweet}
-                    <div class="tweet-animation-wrapper">
+                    <div class="tweet-animation-wrapper drop-shadow">
                         <Tweet tweet={$currentTweet} />
                     </div>
                 {/if}
@@ -97,5 +97,9 @@
                 background-color: red;
             }
         }
+    }
+
+    .drop-shadow {
+        box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     }
 </style>
