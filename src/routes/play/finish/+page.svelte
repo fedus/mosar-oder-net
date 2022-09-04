@@ -1,11 +1,14 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { writable } from 'svelte/store'; //debug
     import Mosavatar from '$lib/components/mosavatar.svelte';
     import aperol from "$lib/assets/mosavatars/aperol.png";
 
     import { gameStateStore } from '$lib/stores/game-state';
 
-    const { score, rounds } = gameStateStore;
+    const { /*score,*/ rounds } = gameStateStore;
+
+    let score = writable(3); //debug
 
     let ready = false;
 
@@ -23,7 +26,7 @@
         <div class="score-aperol">
             {#each [...Array(5).keys()] as idx}
                 {@const className = `score-${idx + 1}`}
-                <img src={aperol} class={`aperol ${ready ? className : ''}`} class:inactive={idx + 1 > $score} alt="Aperol Spritz">
+                <img src={aperol} class={`aperol ${ready ? className : ''}`} class:active={ready && (idx + 1 <= $score)} alt="Aperol Spritz">
             {/each}
         </div>
         <div class="mosavatar">
@@ -59,38 +62,40 @@
                 .aperol {
                     position: absolute;
                     left: 50%;
+                    filter: grayscale(100%);
                     transform: translateX(-50%) translateY(50px);
                     width: 100px;
 
-                    transition: transform 1s;
+                    transition: transform 0.5s, filter 1s;
                 }
 
                 .score-1 {
                     transform: translateX(-250%) translateY(-100px) rotate(-40deg);
+                    transition-delay: 0s, 1.7s;
                 }
 
                 .score-2 {
                     transform: translateX(-150%) translateY(-150px) rotate(-20deg);
-                    transition-delay: .3s;
+                    transition-delay: .3s, 2s;
                 }
 
                 .score-3 {
                     transform: translateX(-50%) translateY(-170px);
-                    transition-delay: .6s;
+                    transition-delay: .6s, 2.3s;
                 }
 
                 .score-4 {
                     transform: translateX(50%) translateY(-155px) rotate(20deg);
-                    transition-delay: .9s;
+                    transition-delay: .9s, 2.6s;
                 }
 
                 .score-5 {
                     transform: translateX(140%) translateY(-110px) rotate(40deg);
-                    transition-delay: 1.2s;
+                    transition-delay: 1.2s, 2.9s;
                 }
 
-                .inactive {
-                    filter: grayscale(100%);
+                .active {
+                    filter: unset;
                 }
             }
 
