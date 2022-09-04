@@ -6,27 +6,52 @@
 
     import { gameStateStore } from '$lib/stores/game-state';
 
-    const { /*score,*/ rounds } = gameStateStore;
+    //const { score, rounds } = gameStateStore;
 
-    let score = writable(3); //debug
+    let score = writable(5); //debug
+    let rounds = writable(5); //debug
 
-    let ready = false;
+    let animInterval = 300;
 
-    $: mosavatar_index = $score == 0 ? 0 : $score - 1;
+    let firstAnimCounter = 0;
+    let secondAnimCounter = 0;
 
-    onMount(() => ready = true);
+    $: maxMosavatarIndex = Math.min($score, secondAnimCounter);
+    $: mosavatar_index = maxMosavatarIndex == 0 ? 0 : maxMosavatarIndex - 1;
+
+    function advanceSecondAnimCounter() {
+        secondAnimCounter++;
+
+        if(secondAnimCounter < $rounds) {
+            setTimeout(advanceSecondAnimCounter, animInterval);
+        }
+    }
+
+    function advanceFirstAnimCounter() {
+        firstAnimCounter++;
+
+        if(firstAnimCounter >= $rounds) {
+            setTimeout(advanceSecondAnimCounter, animInterval);
+        } else {
+            setTimeout(advanceFirstAnimCounter, animInterval);
+        }
+    }
+
+    onMount(() => {
+        setTimeout(advanceFirstAnimCounter, 0)
+    });
 </script>
 
 <div class="score-container">
     <div class="score-text">
-        Däi Score si {$score} Spritz!
+        Däi Score si {$score} Spritz! {secondAnimCounter}
     </div>
 
     <div class="mosavatar-score-container">
         <div class="score-aperol">
             {#each [...Array(5).keys()] as idx}
                 {@const className = `score-${idx + 1}`}
-                <img src={aperol} class={`aperol ${ready ? className : ''}`} class:active={ready && (idx + 1 <= $score)} alt="Aperol Spritz">
+                <img src={aperol} class={`aperol ${idx < firstAnimCounter ? className : ''}`} class:active={idx < secondAnimCounter && (idx + 1 <= $score)} alt="Aperol Spritz">
             {/each}
         </div>
         <div class="mosavatar">
@@ -51,7 +76,7 @@
 
         .score-text {
             font-weight: 900;
-            font-size: 8vh;
+            //font-size: 8vh;
         }
 
         .mosavatar-score-container {
@@ -66,32 +91,32 @@
                     transform: translateX(-50%) translateY(50px);
                     width: 100px;
 
-                    transition: transform 0.5s, filter 1s;
+                    transition: transform .5s, filter .5s;
                 }
 
                 .score-1 {
                     transform: translateX(-250%) translateY(-100px) rotate(-40deg);
-                    transition-delay: 0s, 1.7s;
+                    //transition-delay: 0s, 1.7s;
                 }
 
                 .score-2 {
                     transform: translateX(-150%) translateY(-150px) rotate(-20deg);
-                    transition-delay: .3s, 2s;
+                    //transition-delay: .3s, 2s;
                 }
 
                 .score-3 {
                     transform: translateX(-50%) translateY(-170px);
-                    transition-delay: .6s, 2.3s;
+                    //transition-delay: .6s, 2.3s;
                 }
 
                 .score-4 {
                     transform: translateX(50%) translateY(-155px) rotate(20deg);
-                    transition-delay: .9s, 2.6s;
+                    //transition-delay: .9s, 2.6s;
                 }
 
                 .score-5 {
                     transform: translateX(140%) translateY(-110px) rotate(40deg);
-                    transition-delay: 1.2s, 2.9s;
+                    //transition-delay: 1.2s, 2.9s;
                 }
 
                 .active {
