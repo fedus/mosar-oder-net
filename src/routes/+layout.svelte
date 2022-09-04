@@ -106,7 +106,7 @@
         }
 
         .button-help {
-            background-color: rgb(255,195,0);;
+            background-color: rgb(255,195,0);
         }
     }
 </style>
