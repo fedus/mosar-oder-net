@@ -51,7 +51,9 @@
         <div class="score-aperol">
             {#each [...Array(5).keys()] as idx}
                 {@const className = `score-${idx + 1}`}
-                <img src={aperol} class={`aperol ${idx < firstAnimCounter ? className : ''}`} class:active={idx < secondAnimCounter && (idx + 1 <= $score)} alt="Aperol Spritz">
+                <div class="aperol-container" class:active={idx < secondAnimCounter && (idx + 1 <= $score)}>
+                    <img src={aperol} class={`aperol ${idx < firstAnimCounter ? className : ''}`} alt="Aperol Spritz">
+                </div>
             {/each}
         </div>
         <div class="mosavatar">
@@ -84,43 +86,64 @@
             bottom: 0;
 
             .score-aperol {
-                .aperol {
-                    position: absolute;
-                    left: 50%;
+                .aperol-container {
                     filter: grayscale(100%);
-                    transform: translateX(-50%) translateY(50px);
-                    width: 100px;
+                    transition: filter .5s;
 
-                    transition: transform .5s, filter .5s;
+                    .aperol {
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(50px);
+                        width: 100px;
+
+                        transition: transform .5s;
+                    }
+
+                    .score-1 {
+                        transform: translateX(-250%) translateY(-100px) rotate(-40deg);
+                        //transition-delay: 0s, 1.7s;
+                    }
+
+                    .score-2 {
+                        transform: translateX(-150%) translateY(-150px) rotate(-20deg);
+                        //transition-delay: .3s, 2s;
+                    }
+
+                    .score-3 {
+                        transform: translateX(-50%) translateY(-170px);
+                        //transition-delay: .6s, 2.3s;
+                    }
+
+                    .score-4 {
+                        transform: translateX(50%) translateY(-155px) rotate(20deg);
+                        //transition-delay: .9s, 2.6s;
+                    }
+
+                    .score-5 {
+                        transform: translateX(140%) translateY(-110px) rotate(40deg);
+                        //transition-delay: 1.2s, 2.9s;
+                    }
                 }
 
-                .score-1 {
-                    transform: translateX(-250%) translateY(-100px) rotate(-40deg);
-                    //transition-delay: 0s, 1.7s;
-                }
 
-                .score-2 {
-                    transform: translateX(-150%) translateY(-150px) rotate(-20deg);
-                    //transition-delay: .3s, 2s;
-                }
+                @keyframes zoom-in-out {
+                    0% {
+                        transform: scale(1);
+                    }
 
-                .score-3 {
-                    transform: translateX(-50%) translateY(-170px);
-                    //transition-delay: .6s, 2.3s;
-                }
+                    50% {
+                        transform: scale(1.5);
+                    }
 
-                .score-4 {
-                    transform: translateX(50%) translateY(-155px) rotate(20deg);
-                    //transition-delay: .9s, 2.6s;
-                }
-
-                .score-5 {
-                    transform: translateX(140%) translateY(-110px) rotate(40deg);
-                    //transition-delay: 1.2s, 2.9s;
+                    100% {
+                        transform: scale(1);
+                    }
                 }
 
                 .active {
+                    transform-origin: center center;
                     filter: unset;
+                    animation: zoom-in-out .5s;
                 }
             }
 

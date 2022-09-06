@@ -9,6 +9,14 @@
     let variant = false;
 </script>
 
+<svelte:head>
+    <link rel="preload" href="/mosavatars/m_score_0.png" as="image">
+    <link rel="preload" href="/mosavatars/m_score_1.png" as="image">
+    <link rel="preload" href="/mosavatars/m_score_2.png" as="image">
+    <link rel="preload" href="/mosavatars/m_score_3.png" as="image">
+    <link rel="preload" href="/mosavatars/m_score_4.png" as="image">
+</svelte:head>
+
 <div class="play-container">
     {#if variant}
         <div class="variant-background" transition:fade></div>
