@@ -73,12 +73,15 @@
         align-items: center;
         //justify-content: center;
 
-        background: #FFC300;
-        background: radial-gradient(circle at bottom, #FFC300, #1FC2D5);
+        //background: #FFC300;
+        //background: radial-gradient(circle at bottom, #FFC300, #1FC2D5);
+        background: rgb(30,200,220);
+        background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 80%);
 
         .score-text {
             font-weight: 900;
-            //font-size: 8vh;
+            font-size: 8vh;
+            color: rgb(255,195,0);
         }
 
         .mosavatar-score-container {
