@@ -15,6 +15,7 @@
 
     let firstAnimCounter = 0;
     let secondAnimCounter = 0;
+    let showMosar = false;
 
     $: maxMosavatarIndex = Math.min($score, secondAnimCounter);
     $: mosavatar_index = maxMosavatarIndex == 0 ? 0 : maxMosavatarIndex - 1;
@@ -37,17 +38,18 @@
         }
     }
 
+    function doShowMosar() {
+        showMosar = true;
+        setTimeout(advanceFirstAnimCounter, 1000)
+    }
+
     onMount(() => {
-        setTimeout(advanceFirstAnimCounter, 0)
+        setTimeout(doShowMosar, 3000)
     });
 </script>
 
 <div class="score-container">
-    <div class="score-text">
-        Däi Score si {$score} Spritz! {secondAnimCounter}
-    </div>
-
-    <div class="mosavatar-score-container">
+    <div class="mosavatar-score-container" class:showMosar>
         <div class="score-aperol">
             {#each [...Array(5).keys()] as idx}
                 {@const className = `score-${idx + 1}`}
@@ -75,8 +77,13 @@
 
         //background: #FFC300;
         //background: radial-gradient(circle at bottom, #FFC300, #1FC2D5);
-        background: rgb(30,200,220);
-        background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 80%);
+        //background: rgb(30,200,220);
+        //background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 80%);
+        background: rgb(255,195,0);
+        background: rgb(0,0,0) radial-gradient(circle, rgb(255, 195, 0) 0%, rgb(176, 135, 0) 10%, rgb(61, 61, 61) 30%, rgb(26, 26, 26) 50%, rgb(0, 0, 0) 70%);
+        background-size: 600% 600%;
+        background-position: center center;
+        background-repeat: no-repeat;
 
         .score-text {
             font-weight: 900;
@@ -86,7 +93,13 @@
 
         .mosavatar-score-container {
             position: absolute;
-            bottom: 0;
+            bottom: -600px;
+            z-index: 1;
+            transition: bottom 1s;
+
+            &.showMosar {
+                bottom: 0;
+            }
 
             .score-aperol {
                 .aperol-container {

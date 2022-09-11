@@ -6,17 +6,22 @@
     import Skewer from "$lib/components/skewer.svelte";
 
     let skewerOpen = false;
+    let scoreScreen = true;
     let ready = false;
 
-    $: skewerOpen = !!$page.routeId;
+    $: {
+        skewerOpen = !!$page.routeId && $page.routeId != 'play/finish';
+        scoreScreen = $page.routeId === 'play/finish';
+    }
+
 
     onMount(() => ready = true);
 </script>
 
 <div class="main">
     <slot></slot>
-    <Skewer bind:open={skewerOpen}/>
-    {#if ready && !skewerOpen}
+    <Skewer bind:open={skewerOpen} bind:scoreScreen/>
+    {#if ready && !scoreScreen && !skewerOpen}
         <div
             class="button-container main-buttons top"
             in:blur={{delay: 1000, duration: 500}}

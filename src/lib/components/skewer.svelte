@@ -6,29 +6,40 @@
     import aperol from "$lib/assets/mosavatars/aperol.png";
 
     export let open = false;
+    export let scoreScreen = false;
 </script>
 
-<div class="skew-container" class:disablePointerEvents={open}>
+<div class="skew-container" class:scoreScreen class:disablePointerEvents={open}>
     <div class="skew top animate" class:open>
-        <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
-            <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
-        </div>
-        <div class="top-text">MOSAR</div>
+        {#if !scoreScreen}
+            <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
+                <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
+            </div>
+            <div class="top-text">Mosar</div>
+        {:else}
+            <div class="top-text">Däi Score</div>
+        {/if}
     </div>
     <div class="skew bottom animate" class:open>
-        <div class="unskew-rotate-bottom mosavatar-desktop mosavatar-bottom">
-            <Mosavatar mainSrc={mosavatarOne} />
-        </div>
-        <div class="bottom-text">ODER NET?</div>
+        {#if !scoreScreen}
+            <div class="unskew-rotate-bottom mosavatar-desktop mosavatar-bottom">
+                <Mosavatar mainSrc={mosavatarOne} />
+            </div>
+            <div class="bottom-text">oder net?</div>
+        {:else}
+            <div class="bottom-text">Aperols</div>
+        {/if}
     </div>
 </div>
 
-<div class="mosavatar-mobile mosavatar-top" class:in={!open} class:out={open}>
-    <Mosavatar mainSrc={mosavatarOne} />
-</div>
-<div class="mosavatar-mobile mosavatar-bottom" class:in={!open} class:out={open}>
-    <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
-</div>
+{#if !scoreScreen}
+    <div class="mosavatar-mobile mosavatar-top" class:in={!open} class:out={open}>
+        <Mosavatar mainSrc={mosavatarOne} />
+    </div>
+    <div class="mosavatar-mobile mosavatar-bottom" class:in={!open} class:out={open}>
+        <Mosavatar mainSrc="{mosavatarTwo}" secondarySrc={aperol} />
+    </div>
+{/if}
 
 
 <style lang="scss">
@@ -43,6 +54,12 @@
         align-items: center;
         justify-content: center;
         transform: translate(-50%,-50%);
+
+        &.scoreScreen {
+            transition: transform 1s;
+            transition-delay: 3s;
+            transform: translate(-50%,-60%);
+        }
 
         .skew {
             transform: skewY(-11deg);
@@ -70,7 +87,11 @@
                 background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 50%);
 
                 &.open {
-                    transform: skewY(11deg) translateY(-75vh);
+                    transform: /*skewY(11deg)*/ translateY(-75vh);
+                }
+
+                &.scoreScreen {
+                    height: 30%;
                 }
             }
 
@@ -81,11 +102,16 @@
                 background: radial-gradient(ellipse at center top, rgba(255,195,0,1) 5%, rgba(176,135,0,1) 50%);
 
                 &.open {
-                    transform: skewY(11deg) translateY(75vh);
+                    transform: /*skewY(11deg)*/ translateY(75vh);
+                }
+
+                &.scoreScreen {
+                    height: 70%;
                 }
             }
 
             .top-text, .bottom-text {
+                text-transform: uppercase;
                 transition: transform 1s
             }
 
