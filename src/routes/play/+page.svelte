@@ -18,7 +18,7 @@
 </svelte:head>
 
 <div class="play-container">
-    {#if variant}
+    {#if false && variant}
         <div class="variant-background" transition:fade></div>
     {/if}
     <Game gameData={data} on:transition={() => variant = !variant} />
@@ -27,11 +27,13 @@
 <style lang="scss">
     @keyframes background-anim {
         from {
-            background-size: 10% 10%;
+            //background-size: 10% 10%;
+            background-size: 110% 110%;
         }
 
         to {
-            background-size: 600% 600%;
+            //background-size: 600% 600%;
+            background-size: 100% 100%;
         }
     }
 
@@ -39,11 +41,14 @@
         height: 100%;
         width: 100%;
         position: relative;
-        background: rgb(255,195,0);
-        background: rgb(0,0,0) radial-gradient(circle, rgb(255, 195, 0) 0%, rgb(176, 135, 0) 10%, rgb(61, 61, 61) 30%, rgb(26, 26, 26) 50%, rgb(0, 0, 0) 70%);
-        background-size: 600% 600%;
-        background-position: center center;
-        background-repeat: no-repeat;
+        background: url("/beach_background.png");
+        background-size: 100% 100%;
+        background-position: bottom right;
+        //background: rgb(255,195,0);
+        //background: rgb(0,0,0) radial-gradient(circle, rgb(255, 195, 0) 0%, rgb(176, 135, 0) 10%, rgb(61, 61, 61) 30%, rgb(26, 26, 26) 50%, rgb(0, 0, 0) 70%);
+        //background-size: 600% 600%;
+        //background-position: center center;
+        //background-repeat: no-repeat;
         animation: background-anim 2s;
 
         .variant-background {

@@ -1,5 +1,6 @@
 <script lang="ts">
     import Mosavatar from "$lib/components/mosavatar.svelte";
+    import { gameStateStore } from '$lib/stores/game-state';
 
     import mosavatarOne from "$lib/assets/mosavatars/m1.png";
     import mosavatarTwo from "$lib/assets/mosavatars/m2.png";
@@ -7,9 +8,12 @@
 
     export let open = false;
     export let scoreScreen = false;
+    export let yellowWash = false;
+
+    const { score } = gameStateStore;
 </script>
 
-<div class="skew-container" class:scoreScreen class:disablePointerEvents={open}>
+<div class="skew-container" class:scoreScreen class:yellowWash class:disablePointerEvents={open}>
     <div class="skew top animate" class:open>
         {#if !scoreScreen}
             <div class="unskew-rotate-top mosavatar-desktop mosavatar-top">
@@ -27,7 +31,7 @@
             </div>
             <div class="bottom-text">oder net?</div>
         {:else}
-            <div class="bottom-text">Aperols</div>
+            <div class="bottom-text">{$score} Aperols</div>
         {/if}
     </div>
 </div>
@@ -47,8 +51,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        height: 3000px;
-        width: 3000px;
+        height: 4000px;
+        width: 4000px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -59,6 +63,13 @@
             transition: transform 1s;
             transition-delay: 3s;
             transform: translate(-50%,-60%);
+        }
+
+        &.yellowWash {
+            transition: transform 1s, opacity .5s;
+            transition-delay: 0s, 1s;
+            transform: translate(-50%,-75%);
+            opacity: 0;
         }
 
         .skew {
@@ -112,7 +123,7 @@
 
             .top-text, .bottom-text {
                 text-transform: uppercase;
-                transition: transform 1s
+                transition: transform 1s;
             }
 
             @keyframes top-text-anim {
@@ -137,10 +148,14 @@
 
             .top-text {
                 animation: top-text-anim 2s;
+                animation-delay: 1s;
+                animation-fill-mode: both;
             }
 
             .bottom-text {
                 animation: bottom-text-anim 2s;
+                animation-delay: 1s;
+                animation-fill-mode: both;
             }
 
             .unskew-rotate-top {

@@ -1,21 +1,23 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { writable } from 'svelte/store'; //debug
+    import { goto } from '$app/navigation';
+    import { fade } from 'svelte/transition';
     import Mosavatar from '$lib/components/mosavatar.svelte';
     import aperol from "$lib/assets/mosavatars/aperol.png";
 
     import { gameStateStore } from '$lib/stores/game-state';
 
-    //const { score, rounds } = gameStateStore;
+    const { score, rounds } = gameStateStore;
 
-    let score = writable(5); //debug
-    let rounds = writable(5); //debug
+    //let score = writable(5); //debug
+    //let rounds = writable(5); //debug
 
     let animInterval = 300;
 
     let firstAnimCounter = 0;
     let secondAnimCounter = 0;
     let showMosar = false;
+    let fadeOut = false;
 
     $: maxMosavatarIndex = Math.min($score, secondAnimCounter);
     $: mosavatar_index = maxMosavatarIndex == 0 ? 0 : maxMosavatarIndex - 1;
@@ -43,13 +45,18 @@
         setTimeout(advanceFirstAnimCounter, 1000)
     }
 
+    function fadeOutAndGoToResult() {
+        fadeOut = true;
+        setTimeout(() => goto(`/play/result`, { replaceState: false }), 1000);
+    }
+
     onMount(() => {
         setTimeout(doShowMosar, 3000)
     });
 </script>
 
 <div class="score-container">
-    <div class="mosavatar-score-container" class:showMosar>
+    <div class="mosavatar-score-container" class:showMosar class:fadeOut>
         <div class="score-aperol">
             {#each [...Array(5).keys()] as idx}
                 {@const className = `score-${idx + 1}`}
@@ -62,6 +69,15 @@
             <Mosavatar mainSrc={`/mosavatars/m_score_${mosavatar_index}.png`} />
         </div>
     </div>
+    {#if firstAnimCounter > 0}
+        <div
+            class="result-button-container"
+            class:fadeOut
+            in:fade
+        >
+            <button class="button button-result" on:click={fadeOutAndGoToResult}>Opléisung</button>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -79,11 +95,19 @@
         //background: radial-gradient(circle at bottom, #FFC300, #1FC2D5);
         //background: rgb(30,200,220);
         //background: radial-gradient(ellipse at center bottom, rgba(30,200,220,1) 5%, rgba(30,100,110,1) 80%);
-        background: rgb(255,195,0);
-        background: rgb(0,0,0) radial-gradient(circle, rgb(255, 195, 0) 0%, rgb(176, 135, 0) 10%, rgb(61, 61, 61) 30%, rgb(26, 26, 26) 50%, rgb(0, 0, 0) 70%);
-        background-size: 600% 600%;
-        background-position: center center;
-        background-repeat: no-repeat;
+        
+        //background: rgb(255,195,0);
+        //background: rgb(0,0,0) radial-gradient(circle, rgb(255, 195, 0) 0%, rgb(176, 135, 0) 10%, rgb(61, 61, 61) 30%, rgb(26, 26, 26) 50%, rgb(0, 0, 0) 70%);
+        //background-size: 600% 600%;
+        //background-position: center center;
+        //background-repeat: no-repeat;
+        background: url("/beach_background.png");
+        background-size: 100% 100%;
+        background-position: bottom right;
+
+        .fadeOut {
+            opacity: 0;
+        }
 
         .score-text {
             font-weight: 900;
@@ -95,10 +119,10 @@
             position: absolute;
             bottom: -600px;
             z-index: 1;
-            transition: bottom 1s;
+            transition: bottom 1s, opacity 1s; // combine this better with .fadeOut ...
 
             &.showMosar {
-                bottom: 0;
+                bottom: -100px;
             }
 
             .score-aperol {
@@ -117,27 +141,22 @@
 
                     .score-1 {
                         transform: translateX(-250%) translateY(-100px) rotate(-40deg);
-                        //transition-delay: 0s, 1.7s;
                     }
 
                     .score-2 {
                         transform: translateX(-150%) translateY(-150px) rotate(-20deg);
-                        //transition-delay: .3s, 2s;
                     }
 
                     .score-3 {
                         transform: translateX(-50%) translateY(-170px);
-                        //transition-delay: .6s, 2.3s;
                     }
 
                     .score-4 {
                         transform: translateX(50%) translateY(-155px) rotate(20deg);
-                        //transition-delay: .9s, 2.6s;
                     }
 
                     .score-5 {
                         transform: translateX(140%) translateY(-110px) rotate(40deg);
-                        //transition-delay: 1.2s, 2.9s;
                     }
                 }
 
@@ -166,6 +185,18 @@
             .mosavatar {
                 position: relative;
                 z-index: 1;
+            }
+        }
+
+        .result-button-container {
+            z-index: 2;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            transform: translateX(-50%);
+
+            .button-result {
+                background-color: #1ec1d5;
             }
         }
     }

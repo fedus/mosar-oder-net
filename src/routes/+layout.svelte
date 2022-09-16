@@ -7,11 +7,13 @@
 
     let skewerOpen = false;
     let scoreScreen = true;
+    let yellowWash = false;
     let ready = false;
 
     $: {
-        skewerOpen = !!$page.routeId && $page.routeId != 'play/finish';
-        scoreScreen = $page.routeId === 'play/finish';
+        skewerOpen = !!$page.routeId && $page.routeId != 'play/finish' && $page.routeId != 'play/result';
+        scoreScreen = $page.routeId === 'play/finish' || $page.routeId === 'play/result';
+        yellowWash = $page.routeId === 'play/result';
     }
 
 
@@ -20,7 +22,7 @@
 
 <div class="main">
     <slot></slot>
-    <Skewer bind:open={skewerOpen} bind:scoreScreen/>
+    <Skewer bind:open={skewerOpen} bind:scoreScreen bind:yellowWash/>
     {#if ready && !scoreScreen && !skewerOpen}
         <div
             class="button-container main-buttons top"
